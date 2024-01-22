@@ -1,10 +1,11 @@
 class Arena
   # 3. add a reader for both player and enemy
-  # enter code here
+  attr_reader :player, :enemy
 
   def initialize(player:, enemy:)
     # 2. Create an instance variable for player and enemy
-    # enter code here
+    @player = player
+    @enemy = enemy
   end
 
   def start
@@ -13,7 +14,8 @@ class Arena
     while player.hp > 0 && enemy.hp > 0
       # 4. Implement actions where Player and Enemey will both fight. Player and Enemy will do a random action.
       # ACTIONS are: attack and use_potion
-      # enter code here
+      do_random_action(player, enemy)
+      do_random_action(enemy, player)
 
       puts "Your health: #{player.hp}"
       puts "#{enemy.name}'s health: #{enemy.hp}"
@@ -33,6 +35,19 @@ class Arena
       target.hp -= damage
 
       puts "#{attacker.name} attacks #{target.name} for #{damage} damage!"
+    end
+
+    def use_potion(character)
+      character.use_potion
+    end
+
+    def do_random_action(attacker, target)
+      case rand(1..3)
+      when 1
+        attack(attacker, target)
+      when 2
+        use_potion(attacker)
+      end
     end
 
     # 5.Challenge: Create a method where player can defend
